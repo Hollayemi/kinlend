@@ -1,26 +1,165 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ──────────────────────────────────────────────────────────────────────────
+   KINLEND design tokens
+   Usage:  {bg|text|border|ring|fill|stroke|from|to}-{pri|sec|ter|acc|neu}-{50…900}
+   e.g.    bg-pri-600  text-sec-700  border-ter-200  hover:bg-pri-700
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+   pri  Green   #1E7A44  mission, hero, primary actions        (600 = brand)
+   sec  Purple  #5E2E8F  community + KinMaster layer           (600 = brand)
+   ter  Blue    #1D4E9E  money + tech: KinPay, KinScore, USSD  (600 = brand)
+   acc  Gold              highlights, the Gold tier (sparingly)
+   neu  Warm stone        text, surfaces, hairlines
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+   Text contrast (WCAG AA, 4.5:1) on light surfaces: use 600 or darker for
+   pri/sec/ter, 700 or darker for acc, 600 or darker for neu.
+   ────────────────────────────────────────────────────────────────────────── */
+@theme {
+  /* Reset Tailwind's default palette so only brand tokens exist. */
+  --color-*: initial;
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  --color-pri-50: #F4F8F6;
+  --color-pri-100: #E4EFE9;
+  --color-pri-200: #C4DCCE;
+  --color-pri-300: #9AC3AB;
+  --color-pri-400: #66A580;
+  --color-pri-500: #3E8D5E;
+  --color-pri-600: #1E7A44;
+  --color-pri-700: #196438;
+  --color-pri-800: #144F2C;
+  --color-pri-900: #0F3B21;
+
+  --color-sec-50: #F7F5F9;
+  --color-sec-100: #ECE6F2;
+  --color-sec-200: #D5C9E2;
+  --color-sec-300: #B7A1CD;
+  --color-sec-400: #9271B3;
+  --color-sec-500: #754B9F;
+  --color-sec-600: #5E2E8F;
+  --color-sec-700: #4D2676;
+  --color-sec-800: #3E1E5F;
+  --color-sec-900: #2F1648;
+
+  --color-ter-50: #F4F6FA;
+  --color-ter-100: #E4EAF3;
+  --color-ter-200: #C4D1E6;
+  --color-ter-300: #99AFD3;
+  --color-ter-400: #6587BD;
+  --color-ter-500: #3D67AC;
+  --color-ter-600: #1D4E9E;
+  --color-ter-700: #184082;
+  --color-ter-800: #133469;
+  --color-ter-900: #0F284F;
+
+  --color-acc-50: #FDF8EA;
+  --color-acc-100: #FAEFC9;
+  --color-acc-200: #F5DF98;
+  --color-acc-300: #EDC95F;
+  --color-acc-400: #E2B13A;
+  --color-acc-500: #C8921F;
+  --color-acc-600: #A87415;
+  --color-acc-700: #855811;
+  --color-acc-800: #5F3E0E;
+  --color-acc-900: #3B2709;
+
+  --color-neu-50: #FAF8F4;
+  --color-neu-100: #F3F0E9;
+  --color-neu-200: #E6E2D8;
+  --color-neu-300: #D3CEC1;
+  --color-neu-400: #A9A396;
+  --color-neu-500: #7E786C;
+  --color-neu-600: #5F5A50;
+  --color-neu-700: #46423A;
+  --color-neu-800: #2C2A25;
+  --color-neu-900: #181714;
+
+  /* Ladder tiers (single tones, used as accents only) */
+  --color-tier-bronze: #A8672F;
+  --color-tier-silver: #8C949E;
+
+  --shadow-card: 0 1px 2px rgb(24 23 20 / 0.05), 0 10px 28px -14px rgb(24 23 20 / 0.22);
+  --shadow-pop: 0 2px 4px rgb(24 23 20 / 0.06), 0 24px 48px -16px rgb(24 23 20 / 0.32);
+  --shadow-phone: 0 50px 90px -35px rgb(0 0 0 / 0.65), 0 14px 28px -14px rgb(0 0 0 / 0.5);
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* CSS entrance animations: they run before JS hydrates, so above-the-fold
+     content never waits on a slow connection. */
+  --animate-rise: rise 0.85s var(--ease-out-quint) both;
+  --animate-fade-up: fade-up 0.8s var(--ease-out-quint) both;
+  --animate-caret: caret 1s steps(1) infinite;
+  --animate-slide-up: slide-up 1s var(--ease-out-quint) 0.15s both;
+
+  @keyframes rise {
+    from { transform: translateY(108%); }
+    to { transform: none; }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes slide-up {
+    from { transform: translateY(72%); opacity: 0; }
+    to { transform: none; opacity: 1; }
+  }
+  @keyframes caret {
+    0%, 55% { opacity: 1; }
+    56%, 100% { opacity: 0; }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Fonts are wired in app/layout.tsx through next/font CSS variables. */
+@theme inline {
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --font-display: var(--font-jakarta), ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+/* @utility eyebrow {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+} */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-neu-50);
+    color: var(--color-neu-900);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  ::selection {
+    background: var(--color-pri-200);
+    color: var(--color-pri-900);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-ter-500);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
