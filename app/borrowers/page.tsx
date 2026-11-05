@@ -32,7 +32,7 @@ export default function BorrowersPage() {
         lede="Start small with a trust loan. Repay on time and unlock bigger loans and better terms. No collateral, no bank account needed."
         photo={photos.marketOgun}
       >
-        <ApplyRepayButton variant="onDark" size="lg" source="borrowers-hero" />
+        {/* <ApplyRepayButton variant="onDark" size="lg" source="borrowers-hero" /> */}
         <ButtonLink href={siteConfig.routes.findKinMaster} variant="onDarkOutline" size="lg" event="find_kinmaster_click" eventProps={{ location: "borrowers-hero" }}>
           <MapPin className="h-4 w-4" />
           Find a KinMaster

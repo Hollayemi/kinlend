@@ -44,7 +44,7 @@ export function PageHero({
       </div>
 
       <Container className="relative pb-16 pt-32 lg:pb-24 lg:pt-44">
-        <nav aria-label="Breadcrumb" className="animate-fade-up text-sm text-white/70">
+        <nav aria-label="Breadcrumb" className="animate-fade-up text-sm text-white/70 hidden md:block">
           <ol className="flex items-center gap-1.5">
             <li>
               <Link href="/" className="hover:text-white">Home</Link>
